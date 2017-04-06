@@ -47,7 +47,7 @@ import JavaScriptCore
 
 class ViewController: UIViewController, UIWebViewDelegate {
 
-    var webView: UIWebView!
+    var webView: UIWebView! 
     var jsContext: JSContext!
     
     override func viewDidLoad() {
