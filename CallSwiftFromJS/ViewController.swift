@@ -25,7 +25,7 @@ import JavaScriptCore
 // 定义一个模型 该模型实现SwiftJavaScriptDelegate协议
 @objc class SwiftJavaScriptModel: NSObject, SwiftJavaScriptDelegate {
     
-    weak var controller: UIViewController?
+    weak var controller: UIViewController?//test
     weak var jsContext: JSContext?
     
     func wxPay(orderNo: String) {
