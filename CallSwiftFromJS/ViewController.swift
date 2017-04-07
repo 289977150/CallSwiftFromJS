@@ -38,11 +38,12 @@ import Foundation
     {
         
         print("get user id")
-        return "310071"
+        return "310072"
     }
     
     func getUserName() -> String
     {
+        print("get user name")
         return "葛慧"
     }
     
@@ -63,7 +64,7 @@ import Foundation
     
 }
 
-class ViewController: UIViewController, UIWebViewDelegate {
+class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     
     var webView: UIWebView!
     var jsContext: JSContext!
@@ -94,10 +95,25 @@ class ViewController: UIViewController, UIWebViewDelegate {
         //let request = URLRequest(url: path!)
         
         // 加载网络Html页面 请设置允许Http请求
-        let path = NSURL(string: "http://dzhy.weiedi.com/ecShop/front/order");
+        let path = NSURL(string: "http://dzhy.weiedi.com/ecShop/front/home");
         let request = NSURLRequest(url: path! as URL)
         
         self.webView.loadRequest(request as URLRequest)
+    }
+    
+    
+
+    
+    func webView(_ webView: UIWebView, didCreateJavaScriptContext ctx: JSContext) {
+        
+        self.jsContext = ctx;
+        let model = SwiftJavaScriptModel()
+        model.controller = self
+        model.jsContext = self.jsContext
+        self.jsContext.setObject(model, forKeyedSubscript: "nativeApis" as NSCopying & NSObjectProtocol)
+        self.jsContext.exceptionHandler = { (context, exception) in
+            print("exception：", exception ?? "exception")
+        }
     }
     
     func webViewDidStartLoad(_ webView: UIWebView)
@@ -105,34 +121,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
         
         
         print("webViewDidStartLoad")
-        //if(self.cnt == 1)
-        
-        self.jsContext = webView.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
-        
-        let model = SwiftJavaScriptModel()
-        model.controller = self
-        model.jsContext = self.jsContext
-        
-        // 这一步是将SwiftJavaScriptModel模型注入到JS中，在JS就可以通过WebViewJavascriptBridge调用我们暴露的方法了。
-        self.jsContext.setObject(model, forKeyedSubscript: "nativeApis" as NSCopying & NSObjectProtocol)
-        
-        // 注册到本地的Html页面中
-        //let url = Bundle.main.url(forResource: "demo", withExtension: "html")
-        //let g_home_url = try?String(contentsOf: url!, encoding: String.Encoding.utf8)
-        //self.jsContext.evaluateScript(g_home_url)
-        
-        // 注册到网络Html页面 请设置允许Http请求
-        let url = "http://dzhy.weiedi.com/ecShop/front/order";
-        //let url = self.webView.request?.url    WebView当前访问页面的链接 可动态注册
-        
-        let htmlStr = try?String(contentsOf: NSURL(string: url)! as URL, encoding: String.Encoding.utf8)
-        self.jsContext.evaluateScript(htmlStr)
-        
-        self.jsContext.exceptionHandler = { (context, exception) in
-            print("exception：", exception ?? "exception")
-        }
-        
-        self.cnt = self.cnt + 1
+
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
