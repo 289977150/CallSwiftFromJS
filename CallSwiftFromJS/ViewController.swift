@@ -60,12 +60,12 @@ import Foundation
         // 调起微信分享逻辑
     }
     
-   
+    
 }
 
 class ViewController: UIViewController, UIWebViewDelegate {
-
-    var webView: UIWebView!    
+    
+    var webView: UIWebView!
     var jsContext: JSContext!
     var cnt:Int!
     
@@ -99,13 +99,14 @@ class ViewController: UIViewController, UIWebViewDelegate {
         
         self.webView.loadRequest(request as URLRequest)
     }
-
-   
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView)
+    {
         
-        if(self.cnt == 1)
-        {
+        
+        print("webViewDidStartLoad")
+        //if(self.cnt == 1)
+        
         self.jsContext = webView.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as! JSContext
         
         let model = SwiftJavaScriptModel()
@@ -122,7 +123,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
         
         // 注册到网络Html页面 请设置允许Http请求
         let url = "http://dzhy.weiedi.com/ecShop/front/order";
-        //let curUrl = self.webView.request?.URL?.absoluteString    //WebView当前访问页面的链接 可动态注册
+        //let url = self.webView.request?.url    WebView当前访问页面的链接 可动态注册
         
         let htmlStr = try?String(contentsOf: NSURL(string: url)! as URL, encoding: String.Encoding.utf8)
         self.jsContext.evaluateScript(htmlStr)
@@ -130,16 +131,21 @@ class ViewController: UIViewController, UIWebViewDelegate {
         self.jsContext.exceptionHandler = { (context, exception) in
             print("exception：", exception ?? "exception")
         }
-        }
+        
         self.cnt = self.cnt + 1
-
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        print("webViewDidFinishLoad")
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
