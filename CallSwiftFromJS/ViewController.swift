@@ -18,20 +18,18 @@ import Foundation
     
     func getUserName() -> String
     
-    // js调用App的微信支付功能 演示最基本的用法
-    func wxPay(orderNo: String)
+    func Back()
     
-    // js调用App的微信分享功能 演示字典参数的使用
-    func wxShare(dict: [String: AnyObject])
-    
-    
+    func goToInternet(url:String)
     
 }
 
 // 定义一个模型 该模型实现SwiftJavaScriptDelegate协议
 @objc class SwiftJavaScriptModel: NSObject, SwiftJavaScriptDelegate {
+
+
     
-    weak var controller: UIViewController?//test
+    weak var controller: UIViewController?
     weak var jsContext: JSContext?
     
     func getUserID() -> String
@@ -46,21 +44,16 @@ import Foundation
         print("get user name")
         return "葛慧"
     }
-    
-    func wxPay(orderNo: String) {
-        
-        print("订单号：", orderNo)
-        
-        // 调起微信支付逻辑
+
+    func Back()
+    {
+        print("Back()")
     }
     
-    func wxShare(dict: [String: AnyObject]) {
-        
-        print("分享信息：", dict)
-        
-        // 调起微信分享逻辑
+    func goToInternet(url:String)
+    {
+        print("goToInternet")
     }
-    
     
 }
 
@@ -68,12 +61,11 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     
     var webView: UIWebView!
     var jsContext: JSContext!
-    var cnt:Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        cnt = 1
+        
         addWebView()
     }
     
@@ -118,19 +110,16 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView)
     {
-        
-        
         print("webViewDidStartLoad")
-
     }
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView)
+    {
         print("webViewDidFinishLoad")
-        
-        
     }
     
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
