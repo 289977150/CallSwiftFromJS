@@ -42,7 +42,7 @@ import Foundation
     func getUserName() -> String
     {
         print("get user name")
-        return "葛慧"
+        return "葛"
     }
 
     func Back()
@@ -81,14 +81,14 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
         self.webView.scalesPageToFit = true
         
         // 加载本地Html页面
-        //let path = Bundle.main.url(forResource: "demo", withExtension: "html")
-        //let g_home_url = try?String(contentsOf: path!, encoding: String.Encoding.utf8)
-        //self.webView.loadHTMLString(g_home_url!, baseURL: nil)
-        //let request = URLRequest(url: path!)
+        let path = Bundle.main.url(forResource: "demo", withExtension: "html")
+        let g_home_url = try?String(contentsOf: path!, encoding: String.Encoding.utf8)
+        self.webView.loadHTMLString(g_home_url!, baseURL: nil)
+        let request = URLRequest(url: path!)
         
         // 加载网络Html页面 请设置允许Http请求
-        let path = NSURL(string: "http://dzhy.weiedi.com/ecShop/front/home");
-        let request = NSURLRequest(url: path! as URL)
+        //let path = NSURL(string: "http://dzhy.weiedi.com");
+        //let request = NSURLRequest(url: path! as URL)
         
         self.webView.loadRequest(request as URLRequest)
     }
