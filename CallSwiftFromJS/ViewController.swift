@@ -20,7 +20,7 @@ import Foundation
     
     func Back()
     
-    func goToInternet(url:String)
+    func goToInternet(_ url:String)
     
 }
 
@@ -50,7 +50,7 @@ import Foundation
         print("Back()")
     }
     
-    func goToInternet(url:String)//->goToInternetWithUrl in javascript
+    func goToInternet(_ url:String)
     {
         UIApplication.shared.openURL(NSURL(string: url)! as URL)
         print("goToInternet")
