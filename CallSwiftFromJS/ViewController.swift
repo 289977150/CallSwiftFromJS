@@ -76,20 +76,26 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     
     func addWebView() {
         
-        self.webView = UIWebView(frame: self.view.bounds)
+        self.webView = UIWebView(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: self.view.frame.height - 20 ))
+    
         self.view.addSubview(self.webView)
         self.webView.delegate = self
-        self.webView.scalesPageToFit = true
+        
+        
+        
+        
+//        self.webView.scalesPageToFit = true
         
         // 加载本地Html页面
-        let path = Bundle.main.url(forResource: "demo", withExtension: "html")
-        let g_home_url = try?String(contentsOf: path!, encoding: String.Encoding.utf8)
-        self.webView.loadHTMLString(g_home_url!, baseURL: nil)
-        let request = URLRequest(url: path!)
+//        let path = Bundle.main.url(forResource: "demo", withExtension: "html")
+//        let g_home_url = try?String(contentsOf: path!, encoding: String.Encoding.utf8)
+//        self.webView.loadHTMLString(g_home_url!, baseURL: nil)
+//        let request = URLRequest(url: path!)
         
         // 加载网络Html页面 请设置允许Http请求
-        //let path = NSURL(string: "http://dzhy.weiedi.com");
-        //let request = NSURLRequest(url: path! as URL)
+//        let path = NSURL(string: "http://www.baidu.com");
+        let path = NSURL(string: "http://dzhy.weiedi.com/ecShop/front/home");
+        let request = NSURLRequest(url: path! as URL)
         
         self.webView.loadRequest(request as URLRequest)
     }
