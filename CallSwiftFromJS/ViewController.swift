@@ -71,7 +71,7 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     }
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
     
     func addWebView() {
