@@ -29,8 +29,9 @@ import Foundation
 
 
     
-    weak var controller: UIViewController?
+    weak var controller: ViewController?
     weak var jsContext: JSContext?
+    
     
     func getUserID() -> String
     {
@@ -47,6 +48,7 @@ import Foundation
 
     func Back()
     {
+        controller?.removeWebView()
         print("Back()")
     }
     
@@ -60,6 +62,12 @@ import Foundation
 
 class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     
+    @IBOutlet weak var txtUsername: UITextField!
+  
+    @IBOutlet weak var loginView: UIView!
+    
+    @IBOutlet weak var txtPwd: UITextField!
+    
     var webView: UIWebView!
     var jsContext: JSContext!
     
@@ -67,12 +75,27 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        addWebView()
-    }
+            }
     
     override var prefersStatusBarHidden: Bool {
         return false
     }
+    
+    
+    @IBAction func onLogin(_ sender: Any) {
+        addWebView()
+    }
+    
+    
+    @IBAction func onFindPWD(_ sender: Any) {
+    }
+    
+    
+    public func removeWebView()
+    {
+        self.webView.removeFromSuperview()
+    }
+    
     
     func addWebView() {
         
@@ -109,6 +132,7 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
         let model = SwiftJavaScriptModel()
         model.controller = self
         model.jsContext = self.jsContext
+        
         self.jsContext.setObject(model, forKeyedSubscript: "nativeApis" as NSCopying & NSObjectProtocol)
         self.jsContext.exceptionHandler = { (context, exception) in
             print("exception：", exception ?? "exception")
