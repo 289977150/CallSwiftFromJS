@@ -93,7 +93,11 @@ class ViewController: UIViewController, TSWebViewDelegate, UIWebViewDelegate {
     
     public func removeWebView()
     {
-        self.webView.removeFromSuperview()
+        DispatchQueue.main.async(){
+           self.webView.removeFromSuperview()
+        }
+
+        
     }
     
     
